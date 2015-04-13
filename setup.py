@@ -1,29 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import uuid
 
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
+from pip.req import parse_requirements
 
-with open('README.rst') as readme_file:
-    readme = readme_file.read()
+readme = open('README.rst').read()
+history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
-with open('HISTORY.rst') as history_file:
-    history = history_file.read().replace('.. :changelog:', '')
+install_reqs = parse_requirements('requirements.txt', session=uuid.uuid1())
 
-requirements = [
-    # TODO: put package requirements here
-]
+requirements = [str(ir.req) for ir in install_reqs]
+test_requirements = requirements
 
-test_requirements = [
-    # TODO: put package test requirements here
-]
 
 setup(
-    name='vulyk-build',
+    name='vulyk_build',
     version='0.1.0',
     description="Build test project",
     long_description=readme + '\n\n' + history,
@@ -31,10 +28,10 @@ setup(
     author_email='gotsyk@gmail.com',
     url='https://github.com/hotsyk/vulyk-build',
     packages=[
-        'vulyk-build',
+        'vulyk_build',
     ],
-    package_dir={'vulyk-build':
-                 'vulyk-build'},
+    package_dir={'vulyk_build':
+                 'vulyk_build'},
     include_package_data=True,
     install_requires=requirements,
     license="BSD",
